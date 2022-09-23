@@ -55,14 +55,13 @@ class BooksDataSourceTester(unittest.TestCase):
         book = self.data_source.Book('Moby Dick')
         self.AssertTrue(self.data_source.Book.__eq__(book, book))
         
-    def test_noStartYear(self):
-        noStartYearBefore1900 = self.data_source.books_between_years(None, 1900)
-        self.assertIn(self.data_source.Book('Emma'), noStartYearBefore1900)
-        #We assumed that assertIn will pass if the book object returned by calling Book('Emma') is contained in noStartYearBefore1900
+    def test_startYear_minimum(self):
+        minimum1900 = self.data_source.books_between_years(1900, None)
+        self.assertEqual(0, minimum1900.count(self.data_source.Book('Emma')))
 
-    def test_noEndYear(self):
-        noEndYearAfter2000 = self.data_source.books_between_years(2000, None)
-        self.assertIn(self.data_source.Book('All Clear'), noEndYearAfter2000)
+    def test_endYear_maximum(self):
+        maximum2000 = self.data_source.books_between_years(None, 2000)
+        self.assertEqual(0, maximum2000.count(self.data_source.Book('All Clear')))
 
     def test_default_books(self):
         self.assertEqual(self.data_source.books(None), self.data_source.books(None, 'title'))
