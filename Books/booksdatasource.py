@@ -8,6 +8,16 @@
 '''
 
 import csv
+import sys
+
+def getAuthor(line, cursor):
+        author_name = ''
+        while line[cursor] != ")":
+            author_name += line[cursor]
+            cursor += 1
+        cursor += 1
+        author_name += ")"
+        return author_name
 
 class Author:
     def __init__(self, surname='', given_name='', birth_year=None, death_year=None):
@@ -49,6 +59,31 @@ class BooksDataSource:
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
         '''
+        for line in books_csv_file_name:
+            cursor = 0
+            if line[0] == '"':
+                cursor = 1
+                splitChar = '"'
+                y = 2
+            else:
+                cursor = 0
+                splitChar = ","  
+                y = 1 
+            title = ''
+            while line[cursor] != splitChar:
+                title += line[cursor]
+                cursor += 1
+            
+            cursor += y
+            publication_year = ''
+            while line[cursor] != ",":
+                publication_year += line[cursor]
+                cursor += 1
+            cursor += 1
+
+            print(title + " " + publication_year + " " + author_name)
+                    
+
         pass
 
     def authors(self, search_text=None):
@@ -86,3 +121,6 @@ class BooksDataSource:
         '''
         return []
 
+if __name__ == '__main__':
+    file = open('books1.csv')
+    BooksDataSource(file)
