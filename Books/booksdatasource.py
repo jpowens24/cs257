@@ -71,19 +71,34 @@ class BooksDataSource:
                 cursor += 1
             cursor += 1
             authors = []
-            while line[cursor] != "\n":
+            while line[cursor] != "\n":   #Parse book's authors until end of line
                 if line[cursor] == ' ':
                     cursor += 5
-                author_name = ''
-                while line[cursor] != ')':
-                    author_name += line[cursor]
+                author_given_name = ''
+                while line[cursor] != ' ':
+                    author_given_name += line[cursor]
                     cursor += 1
-                author_name += ')'
-                authors.append(author_name)
+                cursor += 1
+                author_surname = ''
+                while line[cursor] != ' ':
+                    author_surname += line[cursor]
+                    cursor += 1
+                cursor += 2
+                author_birth_year = ''
+                while line[cursor] != '-':
+                    author_birth_year += line[cursor]
+                    cursor += 1
+                cursor += 1
+                author_death_year = ''
+                while line[cursor] != ')':
+                    author_death_year += line[cursor]
+                    cursor += 1
+                authors.append(author_given_name + ' ' + author_surname + ' ' + author_birth_year + ' ' + author_death_year)
                 cursor += 1
             author_names = ''
             for i in range(len(authors)):
                 author_names += authors[len(authors) - i - 1]
+                author_names += ' '
             print(title + " " + publication_year + ' ' + author_names)
         pass
 
