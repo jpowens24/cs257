@@ -73,33 +73,31 @@ class BooksDataSource:
             authors = []
             while line[cursor] != "\n":   #Parse book's authors until end of line
                 if line[cursor] == ' ':
-                    cursor += 5
+                    cursor += 5 #skip " and "
                 author_given_name = ''
                 while line[cursor] != ' ':
                     author_given_name += line[cursor]
                     cursor += 1
-                cursor += 1
+                cursor += 1 #skip space
                 author_surname = ''
-                while line[cursor] != ' ':
+                while line[cursor] != '(':
                     author_surname += line[cursor]
                     cursor += 1
-                cursor += 2
+                author_surname = author_surname[:-1] #remove space from end of surname
+                cursor += 1 #skip open parenthesis
                 author_birth_year = ''
                 while line[cursor] != '-':
                     author_birth_year += line[cursor]
                     cursor += 1
-                cursor += 1
+                cursor += 1 #skip dash
                 author_death_year = ''
                 while line[cursor] != ')':
                     author_death_year += line[cursor]
                     cursor += 1
-                authors.append(author_given_name + ' ' + author_surname + ' ' + author_birth_year + ' ' + author_death_year)
-                cursor += 1
-            author_names = ''
-            for i in range(len(authors)):
-                author_names += authors[len(authors) - i - 1]
-                author_names += ' '
-            print(title + " " + publication_year + ' ' + author_names)
+                current_author = Author(author_surname, author_given_name, author_birth_year, author_death_year)
+                authors.append(current_author)
+                cursor += 1 #skip space
+            print(title + " " + publication_year + ' ' + authors[0].given_name + ' ' + authors[0].surname + ' ' + authors[0].birth_year + ' ' + authors[0].death_year)
         pass
 
     def authors(self, search_text=None):
@@ -138,5 +136,5 @@ class BooksDataSource:
         return []
 
 if __name__ == '__main__':
-    file = open('books1.csv')
-    BooksDataSource(file)
+    with open('books1.csv') as file:
+        BooksDataSource(file)
