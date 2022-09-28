@@ -10,15 +10,6 @@
 import csv
 import sys
 
-def getAuthor(line, cursor):
-        author_name = ''
-        while line[cursor] != ")":
-            author_name += line[cursor]
-            cursor += 1
-        cursor += 1
-        author_name += ")"
-        return author_name
-
 class Author:
     def __init__(self, surname='', given_name='', birth_year=None, death_year=None):
         self.surname = surname
@@ -73,17 +64,27 @@ class BooksDataSource:
             while line[cursor] != splitChar:
                 title += line[cursor]
                 cursor += 1
-            
             cursor += y
             publication_year = ''
             while line[cursor] != ",":
                 publication_year += line[cursor]
                 cursor += 1
             cursor += 1
-
-            print(title + " " + publication_year + " " + author_name)
-                    
-
+            authors = []
+            while line[cursor] != "\n":
+                if line[cursor] == ' ':
+                    cursor += 5
+                author_name = ''
+                while line[cursor] != ')':
+                    author_name += line[cursor]
+                    cursor += 1
+                author_name += ')'
+                authors.append(author_name)
+                cursor += 1
+            author_names = ''
+            for i in range(len(authors)):
+                author_names += authors[len(authors) - i - 1]
+            print(title + " " + publication_year + ' ' + author_names)
         pass
 
     def authors(self, search_text=None):
