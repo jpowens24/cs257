@@ -50,6 +50,8 @@ class BooksDataSource:
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
         '''
+        self.bookList = []
+        self.authorList = []
         for line in books_csv_file_name:
             cursor = 0
             if line[0] == '"':
@@ -70,7 +72,7 @@ class BooksDataSource:
                 publication_year += line[cursor]
                 cursor += 1
             cursor += 1
-            authors = []
+            current_book_authors = []
             while line[cursor] != "\n":   #Parse book's authors until end of line
                 if line[cursor] == ' ':
                     cursor += 5 #skip " and "
@@ -89,15 +91,22 @@ class BooksDataSource:
                 while line[cursor] != '-':
                     author_birth_year += line[cursor]
                     cursor += 1
+                int(author_birth_year)
                 cursor += 1 #skip dash
                 author_death_year = ''
                 while line[cursor] != ')':
                     author_death_year += line[cursor]
                     cursor += 1
+                if author_death_year != '':
+                    int(author_death_year)
+                else:
+                    author_death_year = None
                 current_author = Author(author_surname, author_given_name, author_birth_year, author_death_year)
-                authors.append(current_author)
+                current_book_authors.append(current_author)
+                self.authorList.append(current_author)
                 cursor += 1 #skip space
-            print(title + " " + publication_year + ' ' + authors[0].given_name + ' ' + authors[0].surname + ' ' + authors[0].birth_year + ' ' + authors[0].death_year)
+            current_book = Book(title, publication_year, current_book_authors)
+            self.bookList.append(current_book)
         pass
 
     def authors(self, search_text=None):
@@ -137,4 +146,4 @@ class BooksDataSource:
 
 if __name__ == '__main__':
     with open('books1.csv') as file:
-        BooksDataSource(file)
+        print(BooksDataSource(file).authorList[41].death_year)
