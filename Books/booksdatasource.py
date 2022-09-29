@@ -66,62 +66,63 @@ class BooksDataSource:
         '''
         self.bookList = []
         self.authorList = []
-        for line in books_csv_file_name:
-            cursor = 0
-            if line[0] == '"':
-                cursor = 1
-                splitChar = '"'
-                y = 2
-            else:
+        with open(books_csv_file_name) as csv_file:
+            for line in csv_file:
                 cursor = 0
-                splitChar = ","  
-                y = 1 
-            title = ''
-            while line[cursor] != splitChar:
-                title += line[cursor]
-                cursor += 1
-            cursor += y
-            publication_year = ''
-            while line[cursor] != ",":
-                publication_year += line[cursor]
-                cursor += 1
-            cursor += 1
-            current_book_authors = []
-            while line[cursor] != "\n":   #Parse book's authors until end of line
-                if line[cursor] == ' ':
-                    cursor += 5 #skip " and "
-                author_given_name = ''
-                while line[cursor] != ' ':
-                    author_given_name += line[cursor]
-                    cursor += 1
-                cursor += 1 #skip space
-                author_surname = ''
-                while line[cursor] != '(':
-                    author_surname += line[cursor]
-                    cursor += 1
-                author_surname = author_surname[:-1] #remove space from end of surname
-                cursor += 1 #skip open parenthesis
-                author_birth_year = ''
-                while line[cursor] != '-':
-                    author_birth_year += line[cursor]
-                    cursor += 1
-                int(author_birth_year)
-                cursor += 1 #skip dash
-                author_death_year = ''
-                while line[cursor] != ')':
-                    author_death_year += line[cursor]
-                    cursor += 1
-                if author_death_year != '':
-                    int(author_death_year)
+                if line[0] == '"':
+                    cursor = 1
+                    splitChar = '"'
+                    y = 2
                 else:
-                    author_death_year = None
-                current_author = Author(author_surname, author_given_name, author_birth_year, author_death_year)
-                current_book_authors.append(current_author)
-                if current_author not in self.authorList:
-                    self.authorList.append(current_author)
-                cursor += 1 #skip space
-            current_book = Book(title, publication_year, current_book_authors)
-            self.bookList.append(current_book)
+                    cursor = 0
+                    splitChar = ","  
+                    y = 1 
+                title = ''
+                while line[cursor] != splitChar:
+                    title += line[cursor]
+                    cursor += 1
+                cursor += y
+                publication_year = ''
+                while line[cursor] != ",":
+                    publication_year += line[cursor]
+                    cursor += 1
+                cursor += 1
+                current_book_authors = []
+                while line[cursor] != "\n":   #Parse book's authors until end of line
+                    if line[cursor] == ' ':
+                        cursor += 5 #skip " and "
+                    author_given_name = ''
+                    while line[cursor] != ' ':
+                        author_given_name += line[cursor]
+                        cursor += 1
+                    cursor += 1 #skip space
+                    author_surname = ''
+                    while line[cursor] != '(':
+                        author_surname += line[cursor]
+                        cursor += 1
+                    author_surname = author_surname[:-1] #Author surname string will have a space at the end that we want to remove
+                    cursor += 1 #skip open parenthesis
+                    author_birth_year = ''
+                    while line[cursor] != '-':
+                        author_birth_year += line[cursor]
+                        cursor += 1
+                    int(author_birth_year)
+                    cursor += 1 #skip dash
+                    author_death_year = ''
+                    while line[cursor] != ')':
+                        author_death_year += line[cursor]
+                        cursor += 1
+                    if author_death_year != '':
+                        int(author_death_year)
+                    else:
+                        author_death_year = None
+                    current_author = Author(author_surname, author_given_name, author_birth_year, author_death_year)
+                    current_book_authors.append(current_author)
+                    if current_author not in self.authorList:
+                        self.authorList.append(current_author)
+                    cursor += 1 #skip space
+                current_book = Book(title, publication_year, current_book_authors)
+                self.bookList.append(current_book)
         pass
 
     def authors(self, search_text=None):
@@ -152,23 +153,19 @@ class BooksDataSource:
                             or 'title', just do the same thing you would do for 'title')
         '''
         if search_text == '':
-            if sort_by == '' or sort_by == 'title':
-                return sorted(self.bookList, key=lambda book: book.title)
-            elif sort_by == 'year':
+            if sort_by == 'year':
                 return sorted(self.bookList, key=lambda book: book.publication_year)
             else:
-                print("Invalid Sort-by Parameter")
+                return sorted(self.bookList, key=lambda book: book.title)
         else:
             searchList = []
             for book in self.bookList:
                 if search_text in book.title:
                     searchList.append(book)
-            if sort_by == '' or sort_by == 'title':
-                return sorted(searchList, key=lambda book: book.title)
-            elif sort_by == 'year':
+            if sort_by == 'year':
                 return sorted(searchList, key=lambda book: book.publication_year)
             else:
-                print("Invalid Sort-by Parameter")
+                return sorted(searchList, key=lambda book: book.title)
         return []
 
     def books_between_years(self, start_year=None, end_year=None):
@@ -190,6 +187,8 @@ class BooksDataSource:
                 if book.publication_year >= start_year:
                     searchList.append(book)
             if end_year != None:
+                if start_year > end_year:
+                    raise ValueError("Start year must be greater than end year")
                 searchList2 = []
                 for book in searchList:
                     if book.publication_year <= end_year:
