@@ -42,6 +42,13 @@ class Book:
             thing as "same book". '''
         return self.title == other.title
 
+    def __lt__(self, other):
+        if self.publication_year < other.publication_year:
+            return True
+        if self.publication_year == other.publication_year and self.title < other.title:
+            return True
+        return False
+
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
         ''' The books CSV file format looks like this:
@@ -175,10 +182,23 @@ class BooksDataSource:
             during start_year should be included. If both are None, then all books
             should be included.
         '''
-        return []
-
-if __name__ == '__main__':
-    with open('books1.csv') as file:
-        returnedBooks = BooksDataSource(file).books('the', 'year')
-    print(returnedBooks[0].publication_year)
-    print(returnedBooks[1].publication_year)
+        if start_year == None and end_year == None:
+            return sorted(self.bookList)
+        if start_year != None:
+            searchList = []
+            for book in self.bookList:
+                if book.publication_year >= start_year:
+                    searchList.append(book)
+            if end_year != None:
+                searchList2 = []
+                for book in searchList:
+                    if book.publication_year <= end_year:
+                        searchList2.append(book)
+                return sorted(searchList2)
+            return sorted(searchList)
+        if end_year != None:
+            searchList = []
+            for book in self.bookList:
+                if book.publication_year <= end_year:
+                    searchList.append(book)
+            return sorted(searchList)
