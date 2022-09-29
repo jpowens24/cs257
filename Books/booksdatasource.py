@@ -21,6 +21,13 @@ class Author:
         ''' For simplicity, we're going to assume that no two authors have the same name. '''
         return self.surname == other.surname and self.given_name == other.given_name
 
+    def __lt__(self, other):
+        if self.surname < other.surname:
+            return True
+        if self.surname == other.surname and self.given_name < other.given_name:
+            return True
+        return False
+
 class Book:
     def __init__(self, title='', publication_year=None, authors=[]):
         ''' Note that the self.authors instance variable is a list of
@@ -103,7 +110,8 @@ class BooksDataSource:
                     author_death_year = None
                 current_author = Author(author_surname, author_given_name, author_birth_year, author_death_year)
                 current_book_authors.append(current_author)
-                self.authorList.append(current_author)
+                if current_author not in self.authorList:
+                    self.authorList.append(current_author)
                 cursor += 1 #skip space
             current_book = Book(title, publication_year, current_book_authors)
             self.bookList.append(current_book)
@@ -115,7 +123,14 @@ class BooksDataSource:
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
-        return []
+        if search_text == '':
+            return sorted(self.authorList)
+        else:
+            searchList = []
+            for author in self.authorList:
+                if search_text in author.given_name or search_text in author.surname:
+                    searchList.append(author)
+            return sorted(searchList)
 
     def books(self, search_text=None, sort_by='title'):
         ''' Returns a list of all the Book objects in this data source whose
@@ -129,6 +144,24 @@ class BooksDataSource:
                 default -- same as 'title' (that is, if sort_by is anything other than 'year'
                             or 'title', just do the same thing you would do for 'title')
         '''
+        if search_text == '':
+            if sort_by == '' or sort_by == 'title':
+                return sorted(self.bookList, key=lambda book: book.title)
+            elif sort_by == 'year':
+                return sorted(self.bookList, key=lambda book: book.publication_year)
+            else:
+                print("Invalid Sort-by Parameter")
+        else:
+            searchList = []
+            for book in self.bookList:
+                if search_text in book.title:
+                    searchList.append(book)
+            if sort_by == '' or sort_by == 'title':
+                return sorted(searchList, key=lambda book: book.title)
+            elif sort_by == 'year':
+                return sorted(searchList, key=lambda book: book.publication_year)
+            else:
+                print("Invalid Sort-by Parameter")
         return []
 
     def books_between_years(self, start_year=None, end_year=None):
@@ -146,4 +179,6 @@ class BooksDataSource:
 
 if __name__ == '__main__':
     with open('books1.csv') as file:
-        print(BooksDataSource(file).authorList[41].death_year)
+        returnedBooks = BooksDataSource(file).books('the', 'year')
+    print(returnedBooks[0].publication_year)
+    print(returnedBooks[1].publication_year)
