@@ -131,12 +131,13 @@ class BooksDataSource:
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
-        if search_text == '':
+        if search_text == '' or '-':
             return sorted(self.authorList)
         else:
             searchList = []
             for author in self.authorList:
-                if search_text in author.given_name or search_text in author.surname:
+                author_name = author.given_name + ' ' + author.surname
+                if search_text.upper() in author_name.upper():
                     searchList.append(author)
             return sorted(searchList)
 
@@ -152,7 +153,7 @@ class BooksDataSource:
                 default -- same as 'title' (that is, if sort_by is anything other than 'year'
                             or 'title', just do the same thing you would do for 'title')
         '''
-        if search_text == '':
+        if search_text == '' or '-':
             if sort_by == 'year':
                 return sorted(self.bookList, key=lambda book: book.publication_year)
             else:
@@ -160,7 +161,7 @@ class BooksDataSource:
         else:
             searchList = []
             for book in self.bookList:
-                if search_text in book.title:
+                if search_text.upper() in book.title.upper():
                     searchList.append(book)
             if sort_by == 'year':
                 return sorted(searchList, key=lambda book: book.publication_year)
