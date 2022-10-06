@@ -1,27 +1,36 @@
-NAME
-	searchb - Search for books
-SYNOPSIS
-	searchb <S>
-DESCRIPTION
-	searchb takes a search string S and prints a list of books whose titles contain the string
+Jack Owens
+Hannah Moran
 
 NAME
-	searcha - Search for authors
+	books - Search for books
 SYNOPSIS
-	searcha <S>
+	python3 books.py --books [string] [criteria]
+	python3 books.py -b [string] [criteria]
+	python3 books.py -books - [criteria]
+	python3 books.py -b - [criteria]
 DESCRIPTION
-	searcha takes a search string S and prints a list of authors whose names contain the string
+	books takes a search string and prints a list of books whose titles contain the string and 	sorts by criteria. Criteria can be title or year 
+
+NAME
+	authors - Search for authors
+SYNOPSIS
+	python3 books.py --authors [string]
+	python3 books.py -a [string]
+DESCRIPTION
+	authors takes a search string and prints a list of authors whose names contain the string sorted by last name then first name
 
 NAME
 	range - Search range of years
 SYNOPSIS
-	range <A> <B>
+	python3 books.py --range [startyear] [endyear]
+	python3 books.py -r [startyear] [endyear]
 DESCRIPTION
-	range prints a list of books published between years A and B, inclusive
+	range prints a list of books published between start and end years, inclusive
 
 NAME
-	use - Request usage statement
+	help - Request usage statement
 SYNOPSIS
-	use <flag>
+	python3 books.py --help
+	python3 books.py -h
 DESCRIPTION
-	Gives user description of <flag> command-line argument
+	Gives usage statement
