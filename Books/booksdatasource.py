@@ -122,7 +122,8 @@ class BooksDataSource:
                         self.authorList.append(current_author)
                     cursor += 1 #skip space
                 current_book = Book(title, publication_year, current_book_authors)
-                self.bookList.append(current_book)
+                if current_book not in self.bookList:
+                    self.bookList.append(current_book)
         pass
 
     def authors(self, search_text=None):
@@ -131,7 +132,7 @@ class BooksDataSource:
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
-        if search_text == '' or '-':
+        if search_text == '':
             return sorted(self.authorList)
         else:
             searchList = []
@@ -153,7 +154,7 @@ class BooksDataSource:
                 default -- same as 'title' (that is, if sort_by is anything other than 'year'
                             or 'title', just do the same thing you would do for 'title')
         '''
-        if search_text == '' or '-':
+        if search_text == '' or search_text == '-':
             if sort_by == 'year':
                 return sorted(self.bookList, key=lambda book: book.publication_year)
             else:
