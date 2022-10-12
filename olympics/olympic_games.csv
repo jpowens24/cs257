@@ -1,4 +1,4 @@
-ID,Year,Season,City
+id,year,season,city
 1,1992,Summer,Barcelona
 2,2012,Summer,London
 3,1920,Summer,Antwerpen
@@ -6,3 +6,146 @@ ID,Year,Season,City
 5,1988,Winter,Calgary
 6,1992,Winter,Albertville
 7,1994,Winter,Lillehammer
+8,1932,Summer,Los Angeles
+9,2002,Winter,Salt Lake City
+10,1952,Summer,Helsinki
+11,1980,Winter,Lake Placid
+12,2000,Summer,Sydney
+13,1996,Summer,Atlanta
+14,1912,Summer,Stockholm
+15,1924,Summer,Paris
+16,2014,Winter,Sochi
+17,1948,Summer,London
+18,1998,Winter,Nagano
+19,2006,Winter,Torino
+20,2008,Summer,Beijing
+21,2016,Summer,Rio de Janeiro
+22,2004,Summer,Athina
+23,1960,Winter,Squaw Valley
+24,1964,Winter,Innsbruck
+25,1984,Winter,Sarajevo
+26,1984,Summer,Los Angeles
+27,1968,Summer,Mexico City
+28,1972,Summer,Munich
+29,1988,Summer,Seoul
+30,1936,Summer,Berlin
+31,1952,Winter,Oslo
+32,1956,Winter,Cortina d'Ampezzo
+33,1956,Summer,Melbourne
+34,1960,Summer,Roma
+35,1928,Summer,Amsterdam
+36,1976,Summer,Montreal
+37,1980,Summer,Moskva
+38,1964,Summer,Tokyo
+39,2010,Winter,Vancouver
+40,1968,Winter,Grenoble
+41,1906,Summer,Athina
+42,1972,Winter,Sapporo
+43,1976,Winter,Innsbruck
+44,1924,Winter,Chamonix
+45,1904,Summer,St. Louis
+46,"""1984 Summer""","984,",mmer
+47,1928,Winter,Sankt Moritz
+48,"""1972 Summer""","972,",mmer
+49,1908,Summer,London
+50,1948,Winter,Sankt Moritz
+51,1932,Winter,Lake Placid
+52,1936,Winter,Garmisch-Partenkirchen
+53,"""1992 Summer""","992,",mmer
+54,"""1936 Summer""","936,",mmer
+55,"""BEL""",1928 Summer,"928,"
+56,"""1960 Summer""","960,",mmer
+57,"""1968 Summer""","968,",mmer
+58,"""1906 Summer""","906,",mmer
+59,"""2002 Winter""","002,",nter
+60,"""1928 Summer""","928,",mmer
+61,1896,Summer,Athina
+62,"""1952 Winter""","952,",nter
+63,"""1956 Winter""","956,",nter
+64,"""1920 Summer""","920,",mmer
+65,"""1952 Summer""","952,",mmer
+66,"""1992 Winter""","992,",nter
+67,"""1994 Winter""","994,",nter
+68,"""1998 Winter""","998,",nter
+69,1956,Summer,Stockholm
+70,"""1948 Summer""","948,",mmer
+71,"""1988 Summer""","988,",mmer
+72,"""1976 Summer""","976,",mmer
+73,"""2012 Summer""","012,",mmer
+74,"""1980 Summer""","980,",mmer
+75,"""1956 Summer""","956,",mmer
+76,"""1980 Winter""","980,",nter
+77,"""1904 Summer""","904,",mmer
+78,"""1996 Summer""","996,",mmer
+79,"""CAN""",1936 Summer,"936,"
+80,"""2016 Summer""","016,",mmer
+81,"""2000 Summer""","000,",mmer
+82,"""1908 Summer""","908,",mmer
+83,"""2006 Winter""","006,",nter
+84,"""1924 Summer""","924,",mmer
+85,"""2008 Summer""","008,",mmer
+86,"""1984 Winter""","984,",nter
+87,"""1900 Summer""","900,",mmer
+88,"""1972 Winter""","972,",nter
+89,"""1976 Winter""","976,",nter
+90,"""FRA""",1948 Summer,"948,"
+91,"""1932 Summer""","932,",mmer
+92,"""1936 Winter""","936,",nter
+93,"""1948 Winter""","948,",nter
+94,"""1960 Winter""","960,",nter
+95,"""1964 Winter""","964,",nter
+96,"""1964 Summer""","964,",mmer
+97,"""USA""",1904 Summer,"904,"
+98,"""1968 Winter""","968,",nter
+99,"""EUN""",1992 Summer,"992,"
+100,"""1912 Summer""","912,",mmer
+101,"""2004 Summer""","004,",mmer
+102,"""1932 Winter""","932,",nter
+103,"""1928 Winter""","928,",nter
+104,"""1988 Winter""","988,",nter
+105,"""GBR""",1980 Summer,"980,"
+106,"""GBR""",1976 Summer,"976,"
+107,"""GBR""",1992 Summer,"992,"
+108,"""FRA""",1972 Summer,"972,"
+109,"""FRA""",1976 Summer,"976,"
+110,"""NED""",1932 Summer,"932,"
+111,"""NED""",1936 Summer,"936,"
+112,"""USA""",1988 Summer,"988,"
+113,"""POL""",1956 Summer,"956,"
+114,"""GER""",1900 Summer,"900,"
+115,"""USA""",1932 Summer,"932,"
+116,"""USA""",1992 Winter,"992,"
+117,"""USA""",1994 Winter,"994,"
+118,"""NOR""",1924 Winter,"924,"
+119,"""NOR""",1928 Winter,"928,"
+120,"""NOR""",1932 Winter,"932,"
+121,"""NOR""",1936 Winter,"936,"
+122,"""United States""",USA,1928 Summer
+123,"""United States""",USA,1932 Summer
+124,"""TCH""",1936 Winter,"936,"
+125,"""2010 Winter""","010,",nter
+126,"""USA""",2000 Summer,"000,"
+127,"""USA""",2004 Summer,"004,"
+128,"""2014 Winter""","014,",nter
+129,"""POL""",1928 Summer,"928,"
+130,"""HUN""",1952 Summer,"952,"
+131,"""HUN""",1956 Summer,"956,"
+132,"""POL""",1936 Summer,"936,"
+133,"""USA""",1948 Summer,"948,"
+134,"""1924 Winter""","924,",nter
+135,"""POL""",1932 Summer,"932,"
+136,"""NOR""",1904 Summer,"904,"
+137,"""USA""",1924 Summer,"924,"
+138,"""USA""",1928 Summer,"928,"
+139,"""USA""",1968 Summer,"968,"
+140,"""ROU""",1964 Summer,"964,"
+141,"""USA""",1900 Summer,"900,"
+142,"""GER""",1964 Winter,"964,"
+143,"""GDR""",1968 Winter,"968,"
+144,"""USA""",1956 Winter,"956,"
+145,"""GBR""",1976 Winter,"976,"
+146,"""GDR""",1968 Summer,"968,"
+147,"""GDR""",1972 Summer,"972,"
+148,"""AUS""",1960 Summer,"960,"
+149,"""FRA""",1920 Summer,"920,"
+150,"""GER""",1936 Summer,"936,"

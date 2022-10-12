@@ -9,7 +9,8 @@ CREATE TABLE athletes (
     id integer,
     name text,
     height integer,
-    weight integer
+    weight integer,
+    country text
 );
 
 CREATE TABLE nocs (

@@ -9,21 +9,27 @@ import csv
 noc_regions = open('noc_regions.csv')
 nocs = open('nocs.csv', 'r+')
 nocs_csvwriter = csv.writer(nocs)
+nocscolumns = ['noc', 'region']
+nocs_csvwriter.writerow(nocscolumns)
+firstRow = True
 for line in noc_regions:
-    noc = ''
-    cursor = 0
-    while line[cursor] != ',':
-        noc += line[cursor]
+    if firstRow == True:
+        firstRow = False
+    else:
+        noc = ''
+        cursor = 0
+        while line[cursor] != ',':
+            noc += line[cursor]
+            cursor += 1
         cursor += 1
-    cursor += 1
-    region = ''
-    while line[cursor] != ',':
-        region += line[cursor]
-        cursor += 1
-    row = []
-    row.append(noc)
-    row.append(region)
-    nocs_csvwriter.writerow(row)
+        region = ''
+        while line[cursor] != ',':
+            region += line[cursor]
+            cursor += 1
+        row = []
+        row.append(noc)
+        row.append(region)
+        nocs_csvwriter.writerow(row)
 
 noc_regions.close()
 nocs.close()
@@ -31,7 +37,7 @@ nocs.close()
 athlete_events = open('athlete_events.csv')
 athletes = open('athletes.csv', 'r+')
 athletes_csvwriter = csv.writer(athletes)
-athletescolumns = ['ID', 'Name', 'Height', 'Weight']
+athletescolumns = ['id', 'name', 'height', 'weight', 'country']
 athletes_csvwriter.writerow(athletescolumns)
 
 current_id = 'ID'
@@ -52,7 +58,7 @@ for line in athlete_events:
         cursor += 3
 
         for i in range(2):
-            while line[cursor] != ',': #Skip sex
+            while line[cursor] != ',':
                 cursor += 1
             cursor += 1
 
@@ -66,12 +72,19 @@ for line in athlete_events:
         while line[cursor] != ',':
             weight += line[cursor]
             cursor += 1
+        cursor += 2
+
+        country = ''
+        while line[cursor] != '"':
+            country += line[cursor]
+            cursor += 1
         
         row = []
         row.append(id)
         row.append(name)
         row.append(height)
         row.append(weight)
+        row.append(country)
 
         athletes_csvwriter.writerow(row)
 athletes.close()
@@ -82,7 +95,7 @@ olympic_games = open('olympic_games.csv', 'r+')
 games_csvwriter = csv.writer(olympic_games)
 games = []
 id = 0
-gamescolumns = ['ID', 'Year', 'Season', 'City']
+gamescolumns = ['id', 'year', 'season', 'city']
 games_csvwriter.writerow(gamescolumns)
 for line in athlete_events:
     cursor = 1
