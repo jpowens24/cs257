@@ -3,13 +3,13 @@ Jack Owens
 NAME
 	olympics - Request data from olympics database
 SYNOPSIS
-	python3 books.py [criteria] [string]
+	python3 olympics.py [criteria] [string]
 DESCRIPTION
 	-h, --help
         prints the help statement to the user
     -n, --noc <string>
         prints a list of athletes whose NOC matches the seach string, case-insensitive
     -m, --medal
-        prints a list of NOCs next to the number of gold medals they have won
+        prints a list of NOCs in decreasing order of the number of gold medals
     -c, --country
         prints a list of athletes next to their respective country
