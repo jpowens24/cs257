@@ -10,6 +10,6 @@ DESCRIPTION
     -n, --noc <string>
         prints a list of athletes whose NOC matches the seach string, case-insensitive
     -m, --medal
-        prints a list of NOCs in decreasing order of the number of gold medals
+        prints a list of NOCs in decreasing order of the number of gold medals they have won
     -c, --country
         prints a list of athletes next to their respective country
