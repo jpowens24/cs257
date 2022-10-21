@@ -100,7 +100,6 @@ DESCRIPTION
         prints a list of NOCs in decreasing order of the number of gold medals they have won
     -c, --country
         prints a list of athletes next to their respective country'''
-
     print(usage_statement)
 
 def sort_medals(list):

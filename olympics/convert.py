@@ -52,10 +52,11 @@ for line in athlete_events:
         current_id = id
 
         name = ''
-        while line[cursor] != '"':
+        while line[cursor] != ',':
             name += line[cursor]
             cursor += 1
-        cursor += 3
+        cursor += 2
+        name = name[:-1]
 
         for i in range(2):
             while line[cursor] != ',':
