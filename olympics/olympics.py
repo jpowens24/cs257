@@ -116,7 +116,7 @@ DESCRIPTION
 
 
 if len(sys.argv) == 1:
-    print('Invalid Syntax. To get help enter: python3 olympic.py --help')
+    print('Invalid Syntax. To get help enter: python3 olympics.py --help')
 elif len(sys.argv) == 2:
     if sys.argv[1] == '-c' or sys.argv[1] == '--country':
         listOfAthletes = get_athletes_with_country()
@@ -124,12 +124,20 @@ elif len(sys.argv) == 2:
             print(athlete)
     elif sys.argv[1] == '-m' or sys.argv[1] == '--medal':
         listOfMedals = get_nocs_medals()
+        medalTuples = []
         for medal in listOfMedals:
-            print(medal)
+            medalTuples.append(medal.split())
+        medalTuples.remove([',', '1'])
+        for medalTuple in medalTuples:
+            medalTuple[1] = int(medalTuple[1])
+        medalTuples = sorted(medalTuples, key=lambda x: x[1])
+        for medalTuple in medalTuples:
+            medalString = medalTuple[0] + ' ' + str(medalTuple[1])
+            print(medalString)
     elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
         usage()
     else:
-        print('Invalid Syntax. To get help enter: python3 olympic.py --help')
+        print('Invalid Syntax. To get help enter: python3 olympics.py --help')
         
 elif len(sys.argv) == 3:
     if sys.argv[1] == '-n' or sys.argv[1] == '--noc':
@@ -137,7 +145,7 @@ elif len(sys.argv) == 3:
         for athlete in listOfAthletes:
             print(athlete)
     else:
-        print('Invalid Syntax. To get help enter: python3 olympic.py --help')
+        print('Invalid Syntax. To get help enter: python3 olympics.py --help')
 
 
 
