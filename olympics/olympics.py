@@ -9,11 +9,6 @@ import psycopg2
 import config
 
 def get_connection():
-    ''' Returns a database connection object with which you can create cursors,
-        issue SQL queries, etc. This function is extremely aggressive about
-        failed connections--it just prints an error message and kills the whole
-        program. Sometimes that's the right choice, but it depends on your
-        error-handling needs. '''
     try:
         return psycopg2.connect(database=config.database,
                                 user=config.user,
@@ -68,16 +63,10 @@ def get_nocs_medals():
     ''' Returns a list of the NOCs who have won a gold medal and the number of medals they have won. '''
     nocs = []
     try:
-        # Create a "cursor", which is an object with which you can iterate
-        # over query results.
         connection = get_connection()
         cursor = connection.cursor()
-
-        # Execute the query
         query = "SELECT noc FROM medals WHERE medals.medal = 'Gold' ORDER BY medals.noc"
         cursor.execute(query)
-
-        # Iterate over the query results to produce the list of author names.
         current_noc_name = ''
         current_noc_medals = 1
         for row in cursor:
@@ -95,7 +84,7 @@ def get_nocs_medals():
     connection.close()
     return nocs
 
-def usage():
+def print_usage_statement():
     usage_statement = '''Jack Owens
 
 NAME
@@ -114,38 +103,44 @@ DESCRIPTION
 
     print(usage_statement)
 
+def sort_medals(list):
+    sortedMedals = []
+    medalTuples = []
+    for medal in list:
+        medalTuples.append(medal.split())
+    medalTuples.remove([',', '1'])
+    for medalTuple in medalTuples:
+        medalTuple[1] = int(medalTuple[1])
+    medalTuples = sorted(medalTuples, key=lambda x: x[1])
+    for medalTuple in medalTuples:
+        medalString = medalTuple[0] + ' ' + str(medalTuple[1])
+        sortedMedals.append(medalString)
+    return sortedMedals
 
-if len(sys.argv) == 1:
-    print('Invalid Syntax. To get help enter: python3 olympics.py --help')
-elif len(sys.argv) == 2:
-    if sys.argv[1] == '-c' or sys.argv[1] == '--country':
-        listOfAthletes = get_athletes_with_country()
-        for athlete in listOfAthletes:
-            print(athlete)
-    elif sys.argv[1] == '-m' or sys.argv[1] == '--medal':
-        listOfMedals = get_nocs_medals()
-        medalTuples = []
-        for medal in listOfMedals:
-            medalTuples.append(medal.split())
-        medalTuples.remove([',', '1'])
-        for medalTuple in medalTuples:
-            medalTuple[1] = int(medalTuple[1])
-        medalTuples = sorted(medalTuples, key=lambda x: x[1])
-        for medalTuple in medalTuples:
-            medalString = medalTuple[0] + ' ' + str(medalTuple[1])
-            print(medalString)
-    elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
-        usage()
-    else:
+def main():
+    if len(sys.argv) == 1:
         print('Invalid Syntax. To get help enter: python3 olympics.py --help')
-        
-elif len(sys.argv) == 3:
-    if sys.argv[1] == '-n' or sys.argv[1] == '--noc':
-        listOfAthletes = get_athletes_by_noc(sys.argv[2])
-        for athlete in listOfAthletes:
-            print(athlete)
-    else:
-        print('Invalid Syntax. To get help enter: python3 olympics.py --help')
+    elif len(sys.argv) == 2:
+        if sys.argv[1] == '-c' or sys.argv[1] == '--country':
+            listOfAthletes = get_athletes_with_country()
+            for athlete in listOfAthletes:
+                print(athlete)
+        elif sys.argv[1] == '-m' or sys.argv[1] == '--medal':
+            listOfMedals = get_nocs_medals()
+            sortedMedals = sort_medals(listOfMedals)
+            for medal in sortedMedals:
+                print(medal)
+        elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
+            print_usage_statement()
+        else:
+            print('Invalid Syntax. To get help enter: python3 olympics.py --help')
+    elif len(sys.argv) == 3:
+        if sys.argv[1] == '-n' or sys.argv[1] == '--noc':
+            listOfAthletes = get_athletes_by_noc(sys.argv[2])
+            for athlete in listOfAthletes:
+                print(athlete)
+        else:
+            print('Invalid Syntax: To get help enter: python3 olympics.py --help')
 
-
-
+if __name__ == '__main__':
+    main()
