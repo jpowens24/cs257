@@ -37,7 +37,7 @@ nocs.close()
 athlete_events = open('athlete_events.csv')
 athletes = open('athletes.csv', 'r+')
 athletes_csvwriter = csv.writer(athletes)
-athletescolumns = ['id', 'name', 'height', 'weight', 'country']
+athletescolumns = ['id', 'name', 'height', 'weight', 'country', 'noc']
 athletes_csvwriter.writerow(athletescolumns)
 
 current_id = 'ID'
@@ -78,17 +78,72 @@ for line in athlete_events:
         while line[cursor] != '"':
             country += line[cursor]
             cursor += 1
-        
+        cursor += 3
+
+        athlete_noc = ''
+        while line[cursor] != '"':
+            athlete_noc += line[cursor]
+            cursor += 1
+
         row = []
         row.append(id)
         row.append(name)
-        row.append(height)
-        row.append(weight)
+        # row.append(height)
+        # row.append(weight)
         row.append(country)
+        row.append(athlete_noc)
 
         athletes_csvwriter.writerow(row)
 athletes.close()
 athlete_events.close()
+
+athlete_events = open('athlete_events.csv')
+medals = open('medals.csv', 'r+')
+medals_csvwriter = csv.writer(medals)
+medalscolumns = ['id', 'noc', 'medal']
+medals_csvwriter.writerow(medalscolumns)
+
+id = 0
+for line in athlete_events:
+    if id == 0:
+        id += 1
+    else:
+        cursor = 1
+        for i in range(7):
+            while line[cursor] != ',':
+                cursor += 1
+            cursor += 1
+        cursor += 1
+        
+        medal_noc = ''
+        while line[cursor] != '"':
+            medal_noc += line[cursor]
+            cursor += 1
+        cursor += 1
+        
+        for i in range(7):
+            while line[cursor] != ',':
+                cursor += 1
+            cursor += 1
+
+        medal = ''
+        if line[cursor] != 'N':
+            cursor += 1
+            while line[cursor] != '"':
+                medal += line[cursor]
+                cursor += 1
+
+        if medal == 'Gold' or medal == 'Bronze' or medal == 'Silver':
+            row = []
+            row.append(id)
+            row.append(medal_noc)
+            row.append(medal)
+
+            medals_csvwriter.writerow(row)
+            id += 1
+medals.close()
+athlete_events.close()
+
 
 athlete_events = open('athlete_events.csv')
 olympic_games = open('olympic_games.csv', 'r+')
@@ -134,3 +189,4 @@ for line in athlete_events:
             newrow.append(city)
             games_csvwriter.writerow(newrow)
 olympic_games.close()
+athlete_events.close()

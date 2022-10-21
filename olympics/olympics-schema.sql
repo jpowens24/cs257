@@ -1,20 +1,19 @@
 CREATE TABLE olympic_games (
     id integer,
-    year integer,
+    calendar_year integer,
     season text,
     city text
 );
 
 CREATE TABLE athletes (
     id integer,
-    name text,
-    height integer,
-    weight integer,
-    country text
+    given_name text,
+    country text,
+    noc text
 );
 
-CREATE TABLE nocs (
+CREATE TABLE medals (
     id integer,
     noc text,
-    region text
+    medal text
 );
